@@ -1,7 +1,5 @@
-"""Handles the prompt, handles input validation, and
-returns a valid integer or a "quit" signal"""
 def get_valid_input():
-  user_input = input("Enter item name and quantity (or type 'quit' to finish): ").strip()
+  user_input = input("Input quantity (or type 'quit' to finish): ").strip()
   if user_input.lower() == 'quit':
           return 'quit'
   elif not user_input.isdigit():
@@ -11,14 +9,22 @@ def get_valid_input():
           print("Invalid input. Please enter a valid integer number.")
           return None
   else:
-       print("pass")
-       return None 
+       return user_input
 
+
+def process_delivery(current_total, new_value):
+    current_total += new_value
+    return current_total
+
+def calculate_tax(amount):
+    print(amount * 0.1)
+    return amount * 0.1
 
 
 #Initialize variables to keep track of total inventory and failed entries
 total_inventory = 0
 failed_entries = 0
+current_total = 0
 
 
 print("Inventory Audit System")
@@ -30,6 +36,24 @@ while True:
         break
     elif result is None:
         failed_entries += 1
+    elif result  is not None:
+        total_inventory += int(result)
+        new_value = float(input("Enter the delivery amount: "))
+
+        #Process the delivery amount and update the current value 
+        current_total = process_delivery(current_total, new_value)
+
+        #add the tax with the delivery amount to the current total
+        current_total += calculate_tax(new_value)    
+        
+
+        print(f"Total delivery amount: {current_total}")
+        print(f"Total quantity: {total_inventory}")
+       
+        
+       
+        
+       
         
     
     # elif user_input.startswith('-'):
@@ -48,28 +72,19 @@ while True:
 
     #         print(f"Added {quantity} units. Total inventory is now {total_inventory}.")
 
-
+5
 #Final summary of the audit
-print("\nInventory Audit Summary")
-print("----------------------")
-print(f"Total inventory: {total_inventory} units")
-print(f"Failed entries: {failed_entries}")
+# print("\nInventory Audit Summary")
+# print("----------------------")
+# print(f"Total inventory: {total_inventory} units")
+# print(f"Failed entries: {failed_entries}")
 
 
 
 
 
 
-"""Calculates the new total and
-returns it"""
-def process_delivery(current_total, new_value):
-    return True
 
-
-"""A new requirement! This function takes a delivery
-amount and returns the tax (10% of that specific delivery)"""
-def calculate_tax(amount):
-    return True
 
 """A dedicated function to print
 the final summary """
