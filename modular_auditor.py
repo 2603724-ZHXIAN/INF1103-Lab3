@@ -21,10 +21,16 @@ def calculate_tax(amount):
     return amount * 0.1
 
 
+def generate_report(total_units, failed_attempts, count):
+    return True
+
+
+
 #Initialize variables to keep track of total inventory and failed entries
 total_inventory = 0
 failed_entries = 0
 current_total = 0
+count = 0
 
 
 print("Inventory Audit System")
@@ -33,10 +39,12 @@ print("----------------------")
 while True:
     result = get_valid_input()
     if result == 'quit':
+        generate_report(total_inventory, failed_entries, count)
         break
     elif result is None:
         failed_entries += 1
     elif result  is not None:
+        count += 1
         total_inventory += int(result)
         new_value = float(input("Enter the delivery amount: "))
 
@@ -85,10 +93,5 @@ while True:
 
 
 
-
-"""A dedicated function to print
-the final summary """
-def generate_report(total_units, failed_attempts):
-    return True
 
 
