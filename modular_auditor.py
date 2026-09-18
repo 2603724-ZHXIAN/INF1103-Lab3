@@ -16,7 +16,6 @@ def process_delivery(current_total, new_value):
     return current_total
 
 def calculate_tax(amount):
-    print(amount * 0.1)
     return amount * 0.1
 
 def float_valid_input():
@@ -28,7 +27,7 @@ def float_valid_input():
         
         # Check if the float is a positive number
         if value < 0:
-            print("Invalid input. Please enter a positive number.")
+            print("Invalid input. Please enter a valid amount.")
             return None
             
         # Return the actual float so you can do math with it later
@@ -36,16 +35,16 @@ def float_valid_input():
         
     except ValueError:
         # This triggers if the user types letters, symbols, or multiple decimals
-        print("Invalid input. Please enter a valid decimal number.")
+        print("Invalid input. Please enter a valid amount.")
         return None
 
 def generate_report(total_units, failed_attempts, count, current_total):
     print("\nInventory Audit Report")
     print("============================")
-    print(f"Total units: {total_units}")
-    print(f"Deliveries: {count}")   
-    print(f"Current Total: {current_total}")
-    print(f"Failed attempts: {failed_attempts}")
+    print(f"Total Unit Quantity: {total_units}")
+    print(f"Total Deliveries Processed: {count}")   
+    print(f"Total Amount including Tax: {current_total}")
+    print(f"Failed Attempts: {failed_attempts}")
     return True
 
 
@@ -68,11 +67,18 @@ while True:
     elif result is None:
         failed_entries += 1
     elif result  is not None:
+        check_maximum = int(result) + total_inventory
+        if check_maximum > 500:
+            print("Maximum inventory limit reached. Cannot add more units.")
+            failed_entries += 1
+            break
         count += 1
         total_inventory += int(result)
         while True:
             new_value = float_valid_input()
-            if new_value is not None:
+            if new_value is None:
+                failed_entries += 1
+            elif new_value is not None:
                 break
         #Process the delivery amount and update the current value 
         current_total = process_delivery(current_total, new_value)
