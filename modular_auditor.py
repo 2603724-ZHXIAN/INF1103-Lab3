@@ -11,7 +11,6 @@ def get_valid_input():
   else:
        return user_input
 
-
 def process_delivery(current_total, new_value):
     current_total += new_value
     return current_total
@@ -20,8 +19,31 @@ def calculate_tax(amount):
     print(amount * 0.1)
     return amount * 0.1
 
+def float_valid_input():
+    user_input = input("Input delivery amount: ").strip()
+          
+    try:
+        # Attempt to convert the string to a float
+        value = float(user_input)
+        
+        # Check if the float is a positive number
+        if value < 0:
+            print("Invalid input. Please enter a positive number.")
+            return None
+            
+        # Return the actual float so you can do math with it later
+        return value
+        
+    except ValueError:
+        # This triggers if the user types letters, symbols, or multiple decimals
+        print("Invalid input. Please enter a valid decimal number.")
+        return None
 
-def generate_report(total_units, failed_attempts, count):
+def generate_report(total_units, failed_attempts, count, current_total):
+    print(f"Total units: {total_units}")
+    print(f"Failed attempts: {failed_attempts}")
+    print(f"Deliveries: {count}")   
+    print(f"Current Total: {current_total}")
     return True
 
 
@@ -39,54 +61,23 @@ print("----------------------")
 while True:
     result = get_valid_input()
     if result == 'quit':
-        generate_report(total_inventory, failed_entries, count)
+        generate_report(total_inventory, failed_entries, count, current_total)
         break
     elif result is None:
         failed_entries += 1
     elif result  is not None:
         count += 1
         total_inventory += int(result)
-        new_value = float(input("Enter the delivery amount: "))
-
+        while True:
+            new_value = float_valid_input()
+            if new_value is not None:
+                break
         #Process the delivery amount and update the current value 
         current_total = process_delivery(current_total, new_value)
 
         #add the tax with the delivery amount to the current total
         current_total += calculate_tax(new_value)    
         
-
-        print(f"Total delivery amount: {current_total}")
-        print(f"Total quantity: {total_inventory}")
-       
-        
-       
-        
-       
-        
-    
-    # elif user_input.startswith('-'):
-    #     print("Invalid input. Please enter a valid integer number.")
-    #     failed_entries += 1
-    # #Successful entry  
-    # else:
-    #     quantity = int(user_input)
-    #     total_inventory += quantity
-
-    #     if total_inventory > 500:
-    #         print("Overstock Alert: Total inventory exceeds 500 units.")
-    #         total_inventory -= quantity  # Revert the addition
-    #         break
-    #     else:    
-
-    #         print(f"Added {quantity} units. Total inventory is now {total_inventory}.")
-
-5
-#Final summary of the audit
-# print("\nInventory Audit Summary")
-# print("----------------------")
-# print(f"Total inventory: {total_inventory} units")
-# print(f"Failed entries: {failed_entries}")
-
 
 
 
