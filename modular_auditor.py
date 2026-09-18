@@ -40,10 +40,12 @@ def float_valid_input():
         return None
 
 def generate_report(total_units, failed_attempts, count, current_total):
+    print("\nInventory Audit Report")
+    print("============================")
     print(f"Total units: {total_units}")
-    print(f"Failed attempts: {failed_attempts}")
     print(f"Deliveries: {count}")   
     print(f"Current Total: {current_total}")
+    print(f"Failed attempts: {failed_attempts}")
     return True
 
 
