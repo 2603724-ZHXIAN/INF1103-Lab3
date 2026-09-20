@@ -30,7 +30,6 @@ def float_valid_input():
             print("Invalid input. Please enter a valid amount.")
             return None
             
-        # Return the actual float so you can do math with it later
         return value
         
     except ValueError:
@@ -84,13 +83,4 @@ while True:
         current_total = process_delivery(current_total, new_value)
 
         #add the tax with the delivery amount to the current total
-        current_total += calculate_tax(new_value)    
-        
-
-
-
-
-
-
-
-
+        current_total += calculate_tax(new_value)
